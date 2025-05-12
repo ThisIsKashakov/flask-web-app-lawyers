@@ -1,0 +1,6 @@
+venv/
+.venv/
+__pycache__/
+website/__pycache__/
+.env
+instance/
