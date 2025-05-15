@@ -4,3 +4,8 @@ __pycache__/
 website/__pycache__/
 .env
 instance/
+.prettierrc
+.editorconfig
+package-lock.json
+package.json
+node_modules/

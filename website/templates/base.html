@@ -1,116 +1,151 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>{% block title %}Home{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        crossorigin="anonymous" />
-    <style>
-        html {
-            font-size: 14px;
-        }
-
-        @media (min-width: 768px) {
+        <title>{% block title %}Home{% endblock %}</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            crossorigin="anonymous"
+        />
+        <style>
             html {
-                font-size: 16px;
+                font-size: 14px;
             }
-        }
 
-        .border-bottom {
-            border-bottom: 1px solid #e5e5e5;
-        }
+            @media (min-width: 768px) {
+                html {
+                    font-size: 16px;
+                }
+            }
 
-        .box-shadow {
-            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-        }
-    </style>
-</head>
+            .border-bottom {
+                border-bottom: 1px solid #e5e5e5;
+            }
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow">
-        <a class="navbar-brand" href="/">Navbar</a>
-        <div class="collapse navbar-collapse" id="navbars">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Notes</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown09">
-                        <a class="dropdown-item" href="/">View</a>
-                        <a class="dropdown-item" href="/new-note">Create</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Cases</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown09">
-                        <a class="dropdown-item" href="/view-cases">View</a>
-                        <a class="dropdown-item" href="/new-case">Create</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Courts</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown09">
-                        <a class="dropdown-item" href="/view-courts">View</a>
-                        <a class="dropdown-item" href="/new-court">Create</a>
-                    </div>
-                </li>
-            </ul>
-            <a class="btn btn-outline-danger ml-auto" href="/logout">Logout</a>
-        </div>
-    </nav>
+            .box-shadow {
+                box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+            }
+        </style>
+    </head>
 
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow">
+            <a class="navbar-brand" href="/">Navbar</a>
+            <div class="collapse navbar-collapse" id="navbars">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="dropdown09"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Notes</a
+                        >
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="/">View</a>
+                            <a class="dropdown-item" href="/new-note">Create</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="dropdown09"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Cases</a
+                        >
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="/view-cases">View</a>
+                            <a class="dropdown-item" href="/new-case">Create</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="dropdown09"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Courts</a
+                        >
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="/view-courts">View</a>
+                            <a class="dropdown-item" href="/new-court">Create</a>
+                        </div>
+                    </li>
+                </ul>
+                <a class="btn btn-outline-danger ml-auto" href="/logout">Logout</a>
+            </div>
+        </nav>
 
-    <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        {% if category == 'error' %}
-        <div class="alert alert-danger alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% else %}
-        <div class="alert alert-success alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        <div>
-            {% block content %} {% endblock %}
-        </div>
-    </main>
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div
+                                class="alert alert-danger alter-dismissable fade show"
+                                role="alert"
+                            >
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% else %}
+                            <div
+                                class="alert alert-success alter-dismissable fade show"
+                                role="alert"
+                            >
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div>{% block content %}{% endblock %}</div>
+        </main>
 
-    <!-- Основные JavaScript файлы -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    
-    <!-- Библиотека SheetJS для работы с Excel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    
-    <!-- Блок для дополнительных скриптов страницы -->
-    {% block scripts %}{% endblock %}
-</body>
+        <!-- Основные JavaScript файлы -->
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"
+        ></script>
 
+        <!-- Библиотека SheetJS для работы с Excel -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+        <!-- Блок для дополнительных скриптов страницы -->
+        {% block scripts %}{% endblock %}
+    </body>
 </html>

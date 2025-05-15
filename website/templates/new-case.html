@@ -5,30 +5,54 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="text-center">
-        <h1>New Case</h1>
-        <hr>
+    <div class="container mt-4">
+        <div class="text-center">
+            <h1>New Case</h1>
+            <hr />
+        </div>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="exampleInputTitle1">Title</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputTitle1"
+                    name="title"
+                    placeholder="Enter title"
+                />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputDetails1">Details</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputDetails1"
+                    name="details"
+                    placeholder="Enter details"
+                />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFullName1">Full name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputFullName1"
+                    name="full_name"
+                    placeholder="Enter full name"
+                />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPhone1">Phone number</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputPhone1"
+                    name="phone"
+                    placeholder="Enter phone number"
+                />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    
-    <form method="post">
-        <div class="form-group">
-            <label for="exampleInputTitle1">Title</label>
-            <input type="text" class="form-control" id="exampleInputTitle1" name="title" placeholder="Enter title">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputDetails1">Details</label>
-            <input type="text" class="form-control" id="exampleInputDetails1" name="details" placeholder="Enter details">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputFullName1">Full name</label>
-            <input type="text" class="form-control" id="exampleInputFullName1" name="full_name" placeholder="Enter full name">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPhone1">Phone number</label>
-            <input type="text" class="form-control" id="exampleInputPhone1" name="phone" placeholder="Enter phone number">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
 {% endblock %}

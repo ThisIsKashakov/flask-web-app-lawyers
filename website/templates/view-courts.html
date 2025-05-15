@@ -1,40 +1,50 @@
 {% extends "base.html" %}
 
 {% block title %}
-Courts
+    Courts
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid pt-3 px-4">
-    <h2>Search</h2>
-    <form action="{{ url_for('routes.search_courts') }}" method="post" class="input-group mb-3">
-        <input type="text" name="search" class="form-control" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Search</button>
+    <div class="container-fluid pt-3 px-4">
+        <h2>Search</h2>
+        <form action="{{ url_for('routes.search_courts') }}" method="post" class="input-group mb-3">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search"
+                aria-label="Search"
+            />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+        <h2>Available Courts</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th># ID</th>
+                        <th>Title</th>
+                        <th>Address</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for court in courts %}
+                        <tr>
+                            <td>{{ court.id }}</td>
+                            <td>{{ court.title }}</td>
+                            <td>{{ court.address }}</td>
+                            <td>
+                                <a href="/edit-court/{{ court.id }}" class="btn btn-sm btn-info"
+                                    >Edit</a
+                                >
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </form>
-    <h2>Available Courts</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th># ID</th>
-                    <th>Title</th>
-                    <th>Address</th>
-                    <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for court in courts %}
-                <tr>
-                    <td>{{ court.id }}</td>
-                    <td>{{ court.title }}</td>
-                    <td>{{ court.address }}</td>
-                    <td><a href="/edit-court/{{ court.id }}" class="btn btn-sm btn-info">Edit</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
-</div>
 {% endblock %}
