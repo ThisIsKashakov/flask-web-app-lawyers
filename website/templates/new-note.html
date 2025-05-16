@@ -11,7 +11,7 @@
             <hr />
         </div>
 
-        <form method="post" onsubmit="return validateForm()">
+        <form method="post" onsubmit="return validateNoteForm()">
             <div class="form-group">
                 <label for="inlineFormCustomSelectCase">Select Case</label>
                 <select
@@ -69,69 +69,4 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
-    <script>
-        function validateForm() {
-            var case_id = document.getElementById("inlineFormCustomSelectCase").value;
-            var court_id = document.getElementById("inlineFormCustomSelectCourt").value;
-            var status = document.getElementById("inlineFormCustomSelectStatus").value;
-            var details = document.getElementById("exampleInputDetails1").value;
-            var date = document.getElementById("exampleInputDate1").value;
-            var time = document.getElementById("exampleInputTime1").value;
-            var forbiddenChars = [
-                ";",
-                "--",
-                "'",
-                '"',
-                "=",
-                "<",
-                ">",
-                "|",
-                "&",
-                "$",
-                "@",
-                "%",
-                "^",
-                "*",
-                "(",
-                ")",
-                "[",
-                "]",
-                "{",
-                "}",
-                "`",
-                "~",
-            ];
-            var regex = new RegExp(
-                "[" + forbiddenChars.join("").replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]"
-            );
-
-            if (regex.test(details)) {
-                alert("Input contains forbidden characters.");
-                return false;
-            }
-
-            if (!isValidDate(date)) {
-                alert("Invalid date format.");
-                return false;
-            }
-
-            if (!isValidTime(time)) {
-                alert("Invalid time format.");
-                return false;
-            }
-
-            return true;
-        }
-
-        function isValidDate(dateString) {
-            var regEx = /^\d{4}-\d{2}-\d{2}$/;
-            return dateString.match(regEx) != null;
-        }
-
-        function isValidTime(timeString) {
-            var regEx = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-            return timeString.match(regEx) != null;
-        }
-    </script>
 {% endblock %}

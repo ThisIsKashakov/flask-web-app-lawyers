@@ -48,31 +48,4 @@
             </div>
         </form>
     </div>
-
-    <script>
-        function deleteCourt(button) {
-            var courtId = button.getAttribute("data-court-id");
-            if (confirm("Are you sure you want to delete this court?")) {
-                fetch("/delete-court", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ court_id: courtId }),
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            window.location.href = "/";
-                        } else {
-                            response.json().then((data) => {
-                                alert(data.error || "Failed to delete the court.");
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        alert("Failed to delete the court.");
-                    });
-            }
-        }
-    </script>
 {% endblock %}

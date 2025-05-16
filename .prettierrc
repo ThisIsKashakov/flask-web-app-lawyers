@@ -1,0 +1,18 @@
+{
+  "printWidth": 100,
+  "tabWidth": 4,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "css",
+  "plugins": ["prettier-plugin-jinja-template"],
+  "overrides": [
+    {
+      "files": ["*.html", "*.jinja", "*.j2"],
+      "options": {
+        "parser": "jinja-template"
+      }
+    }
+  ]
+}

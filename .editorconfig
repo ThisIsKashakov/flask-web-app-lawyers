@@ -1,0 +1,2 @@
+[*.{html,jinja,j2}]
+quote_type = preserve

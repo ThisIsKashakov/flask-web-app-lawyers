@@ -145,6 +145,9 @@
         <!-- Библиотека SheetJS для работы с Excel -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
+        <!-- Утилиты для работы с данными -->
+        <script src="{{ url_for('static', filename='js/data-utils.js') }}"></script>
+
         <!-- Блок для дополнительных скриптов страницы -->
         {% block scripts %}{% endblock %}
     </body>

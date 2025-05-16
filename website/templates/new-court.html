@@ -11,7 +11,7 @@
             <hr />
         </div>
 
-        <form method="post" onsubmit="return validateForm()">
+        <form method="post" onsubmit="return validateCourtForm()">
             <div class="form-group">
                 <label for="exampleInputTitle1">Title</label>
                 <input
@@ -36,55 +36,4 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
-    <script>
-        function validateForm() {
-            var title = document.getElementById("exampleInputTitle1").value;
-            var address = document.getElementById("exampleInputAddress1").value;
-            var forbiddenChars = [
-                ";",
-                "--",
-                "'",
-                '"',
-                "=",
-                "<",
-                ">",
-                "|",
-                "&",
-                "$",
-                "@",
-                "%",
-                "^",
-                "*",
-                "(",
-                ")",
-                "[",
-                "]",
-                "{",
-                "}",
-                "`",
-                "~",
-            ];
-            var regex = new RegExp(
-                "[" + forbiddenChars.join("").replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]"
-            );
-
-            if (regex.test(title) || regex.test(address)) {
-                alert("Input contains forbidden characters.");
-                return false;
-            }
-
-            if (title.length < 1 || title.length > 100) {
-                alert("Title must be between 1 and 100 characters long.");
-                return false;
-            }
-
-            if (address.length < 1 || address.length > 100) {
-                alert("Address must be between 1 and 100 characters long.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 {% endblock %}

@@ -87,7 +87,7 @@
                 class="text-center"
                 style="justify-content: center; height: 100%; display: flex; flex-direction: column;"
             >
-                <form class="form-signin" method="post" onsubmit="return validateForm()">
+                <form class="form-signin" method="post" onsubmit="return validateLoginForm()">
                     <img
                         class="mb-4"
                         src="{{ url_for('static', filename='img/logo.svg') }}"
@@ -139,45 +139,5 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"
         ></script>
-        <script>
-            function validateForm() {
-                var name = document.getElementById("inputName").value;
-                var password = document.getElementById("inputPassword").value;
-                var forbiddenChars = [
-                    ";",
-                    "--",
-                    "'",
-                    '"',
-                    "=",
-                    "<",
-                    ">",
-                    "|",
-                    "&",
-                    "$",
-                    "@",
-                    "%",
-                    "^",
-                    "*",
-                    "(",
-                    ")",
-                    "[",
-                    "]",
-                    "{",
-                    "}",
-                    "`",
-                    "~",
-                ];
-                var regex = new RegExp(
-                    "[" + forbiddenChars.join("").replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + "]"
-                );
-
-                if (regex.test(name) || regex.test(password)) {
-                    alert("Input contains forbidden characters.");
-                    return false;
-                }
-
-                return true;
-            }
-        </script>
     </body>
 </html>
