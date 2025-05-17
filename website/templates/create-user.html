@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create User
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="text-center">
+            <h1>Create New User</h1>
+            <hr />
+        </div>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email"
+                    required
+                />
+                <small class="form-text text-muted">
+                    Account credentials will be sent to this email address.
+                </small>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="isAdmin" name="is_admin" />
+                <label class="form-check-label" for="isAdmin">Grant admin privileges</label>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-primary">Create User</button>
+                <a href="/view-users" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

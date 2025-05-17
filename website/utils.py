@@ -3,6 +3,7 @@ import string
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import re
 
 # Load environment variables
 load_dotenv()
@@ -10,6 +11,32 @@ load_dotenv()
 # Storage settings
 MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 8 * 1024 * 1024))  # Default 8MB
 STORAGE_LIMIT = int(os.getenv("STORAGE_LIMIT", 30 * 1024 * 1024 * 1024))  # Default 30GB
+
+# Security settings
+FORBIDDEN_CHARS = [
+    ";",
+    "--",
+    "'",
+    '"',
+    "=",
+    "<",
+    ">",
+    "|",
+    "&",
+    "$",
+    "@",
+    "%",
+    "^",
+    "*",
+    "(",
+    ")",
+    "[",
+    "]",
+    "{",
+    "}",
+    "`",
+    "~",
+]
 
 ALLOWED_EXTENSIONS = {
     "txt",
@@ -34,30 +61,7 @@ def allowed_file(filename):
 
 def generate_random_password(length=12, forbidden_chars=None):
     if forbidden_chars is None:
-        forbidden_chars = [
-            ";",
-            "--",
-            "'",
-            '"',
-            "=",
-            "<",
-            ">",
-            "|",
-            "&",
-            "$",
-            "@",
-            "%",
-            "^",
-            "*",
-            "(",
-            ")",
-            "[",
-            "]",
-            "{",
-            "}",
-            "`",
-            "~",
-        ]
+        forbidden_chars = FORBIDDEN_CHARS
 
     allowed_chars = [
         char
@@ -68,32 +72,23 @@ def generate_random_password(length=12, forbidden_chars=None):
     return password
 
 
+# Список опасных SQL паттернов
+SQL_PATTERNS = [
+    r"(?i)((%27)|('))\s*((%6F)|o|(%4F))((%72)|r|(%52))",  # 'or
+    r"(?i)((%27)|('))\s*((%61)|a|(%41))((%6E)|n|(%4E))((%64)|d|(%44))",  # 'and
+    r"(?i)((%3D)|(=))[^\n]*((%27)|(')|(--)|(\%3B)|(;))",  # ='...
+    r"(?i)((%27)|('))..*?((%27)|('))..",  # '...'
+    r"(?i)/\*.*?\*/",  # /* ... */
+    r"(?i);\s*$",  # Statement ending with ;
+    r"(?i)--",  # SQL comment
+    r"(?i)UNION\s+SELECT",  # UNION SELECT
+    r"(?i)(ALTER|CREATE|DELETE|DROP|EXEC(UTE)?|INSERT|MERGE|SELECT|UPDATE|UNION)",  # SQL commands
+]
+
+
 def has_sql_injection(input_string):
-    forbidden_chars = [
-        ";",
-        "--",
-        "'",
-        '"',
-        "=",
-        "<",
-        ">",
-        "|",
-        "&",
-        "$",
-        "@",
-        "%",
-        "^",
-        "*",
-        "(",
-        ")",
-        "[",
-        "]",
-        "{",
-        "}",
-        "`",
-        "~",
-    ]
-    return any(char in input_string for char in forbidden_chars)
+    """Проверяет строку на наличие паттернов SQL-инъекций"""
+    return any(re.search(pattern, input_string) for pattern in SQL_PATTERNS)
 
 
 def is_number(value):
@@ -124,6 +119,20 @@ def is_valid_time(time_str):
             return True
         except ValueError:
             return False
+
+
+def is_valid_email(email):
+    """
+    Проверяет, что строка соответствует формату email
+
+    Args:
+        email: Строка для проверки
+
+    Returns:
+        bool: True если формат корректный, False в противном случае
+    """
+    email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    return bool(re.match(email_pattern, email))
 
 
 def is_file_size_allowed(file, max_size):

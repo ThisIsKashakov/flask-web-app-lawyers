@@ -43,7 +43,10 @@ def is_admin_exists():
 def create_admin():
     admin_password = validate_admin_password()
     new_admin_user = User(
-        name="admin", password=generate_password_hash(admin_password, method="scrypt")
+        name="admin",
+        password=generate_password_hash(admin_password, method="scrypt"),
+        is_active=True,
+        is_admin=True,
     )
     db.session.add(new_admin_user)
     db.session.commit()
@@ -72,7 +75,12 @@ def login():
 
         user = User.query.filter_by(name=name).first()
         if user:
-            if check_password_hash(user.password, password):
+            if not user.is_active:
+                flash(
+                    "This account has been deactivated. Contact administrator.",
+                    category="error",
+                )
+            elif check_password_hash(user.password, password):
                 flash("Logged in successfully!", category="success")
                 login_user(user, remember=remember_value)
                 return redirect(url_for("routes.home"))

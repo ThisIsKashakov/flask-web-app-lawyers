@@ -40,7 +40,11 @@ class Note(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), unique=True)
+    email = db.Column(db.String(150), unique=True, nullable=True)
     password = db.Column(db.String(150))
+    is_active = db.Column(db.Boolean, default=True)
+    is_admin = db.Column(db.Boolean, default=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class CaseFile(db.Model):

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Manage Users
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-3 px-4">
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+            <h2>User Management</h2>
+            <a href="/create-user" class="btn btn-primary">Create New User</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th># ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                        <tr>
+                            <td>{{ u.id }}</td>
+                            <td>{{ u.name }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{% if u.is_admin %}Admin{% else %}User{% endif %}</td>
+                            <td>
+                                <span
+                                    class="badge {% if u.is_active %}badge-success{% else %}badge-danger{% endif %}"
+                                >
+                                    {% if u.is_active %}Active{% else %}Inactive{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                {{ u.date_created.strftime('%Y-%m-%d') if u.date_created else 'N/A' }}
+                            </td>
+                            <td>
+                                {% if u.id != current_user.id %}
+                                    <button
+                                        class="btn btn-sm {% if u.is_active %}btn-warning{% else %}btn-success{% endif %}"
+                                        onclick="toggleUserStatus(this)"
+                                        data-user-id="{{ u.id }}"
+                                    >
+                                        {% if u.is_active %}Deactivate{% else %}Activate{% endif %}
+                                    </button>
+                                    <button
+                                        class="btn btn-sm btn-danger ml-1"
+                                        onclick="deleteUser(this)"
+                                        data-user-id="{{ u.id }}"
+                                    >
+                                        Delete
+                                    </button>
+                                {% else %}
+                                    <span class="text-muted">Current user</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- JavaScript функции для управления пользователями перенесены в data-utils.js -->
+{% endblock %}

@@ -15,9 +15,13 @@ def create_app():
 
     from .routes import routes
     from .auth import auth
+    from .admin import (
+        admin,
+    )  # Импортируем новый blueprint для управления пользователями
 
     app.register_blueprint(routes, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(admin, url_prefix="/")  # Регистрируем admin blueprint
 
     from .models import User
 
