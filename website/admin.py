@@ -8,9 +8,9 @@ from .utils import (
     is_valid_range,
     generate_random_password,
     is_valid_email,
+    admin_required,
 )
 import json
-from functools import wraps
 
 # Для отправки электронной почты
 import smtplib
@@ -19,18 +19,6 @@ from email.mime.multipart import MIMEMultipart
 import os
 
 admin = Blueprint("admin", __name__)
-
-
-# Декоратор для маршрутов администратора
-def admin_required(func):
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        if not current_user.is_authenticated or not current_user.is_admin:
-            flash("Access denied. Admin privileges required.", category="error")
-            return redirect(url_for("routes.home"))
-        return func(*args, **kwargs)
-
-    return decorated_view
 
 
 # Отправка электронной почты с учетными данными
@@ -116,8 +104,8 @@ def create_user():
     try:
         if request.method == "POST":
             email = request.form.get("email")
-            is_admin_user = request.form.get("is_admin") == "on"
-
+            # Удалена строка получения статуса админа из формы
+            
             # Валидация данных
             if (
                 not email
@@ -157,7 +145,7 @@ def create_user():
                 email=email,
                 password=generate_password_hash(password, method="scrypt"),
                 is_active=True,
-                is_admin=is_admin_user,
+                is_admin=False,  # Всегда создаем обычного пользователя, не админа
             )
 
             db.session.add(new_user)

@@ -4,6 +4,9 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 import re
+from functools import wraps
+from flask import redirect, url_for, flash
+from flask_login import current_user
 
 # Load environment variables
 load_dotenv()
@@ -170,3 +173,15 @@ def is_storage_available(directory, file_size):
     """Check if there's enough storage space for new file"""
     stats = get_storage_stats(directory)
     return stats["free"] >= file_size
+
+
+# Декоратор для маршрутов администратора
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            flash("Access denied. Admin privileges required.", category="error")
+            return redirect(url_for("routes.home"))
+        return func(*args, **kwargs)
+
+    return decorated_view

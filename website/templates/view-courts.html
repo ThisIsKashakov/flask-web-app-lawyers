@@ -19,7 +19,14 @@
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
-        <h2>Available Courts</h2>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+            <h2>Available Courts</h2>
+            {% if user.is_admin %}
+                <a href="/new-court" class="btn btn-success">Add New Court</a>
+            {% endif %}
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
@@ -27,7 +34,9 @@
                         <th># ID</th>
                         <th>Title</th>
                         <th>Address</th>
-                        <th>Edit</th>
+                        {% if user.is_admin %}
+                            <th>Actions</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -36,11 +45,13 @@
                             <td>{{ court.id }}</td>
                             <td>{{ court.title }}</td>
                             <td>{{ court.address }}</td>
-                            <td>
-                                <a href="/edit-court/{{ court.id }}" class="btn btn-sm btn-info"
-                                    >Edit</a
-                                >
-                            </td>
+                            {% if user.is_admin %}
+                                <td>
+                                    <a href="/edit-court/{{ court.id }}" class="btn btn-sm btn-info"
+                                        >Edit</a
+                                    >
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

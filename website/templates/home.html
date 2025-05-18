@@ -38,7 +38,8 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
-                        <th>Edit</th>
+                        <th>Creator</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +61,15 @@
                             <td>{{ note.date }}</td>
                             <td>{{ note.time }}</td>
                             <td class="{{ colors[note.status] }}">{{ note.status }}</td>
+                            <td>{{ note.creator.name if note.creator else 'N/A' }}</td>
                             <td>
-                                <a href="/edit-note/{{ note.id }}" class="btn btn-sm btn-info"
-                                    >Edit</a
-                                >
+                                {% if user.is_admin or note.creator_id == user.id %}
+                                    <a href="/edit-note/{{ note.id }}" class="btn btn-sm btn-info"
+                                        >Edit</a
+                                    >
+                                {% else %}
+                                    <span class="text-muted">View only</span>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

@@ -72,9 +72,9 @@ function deleteCase(button) {
         })
         .then((response) => {
             if (response.ok) {
-                window.location.href = "/";
+                window.location.href = "/view-cases";
             } else {
-                response.json().then((data) => {
+                return response.json().then((data) => {
                     alert(data.error || "Failed to delete the case.");
                 });
             }
@@ -101,9 +101,9 @@ function deleteCourt(button) {
         })
         .then((response) => {
             if (response.ok) {
-                window.location.href = "/";
+                window.location.href = "/view-courts";
             } else {
-                response.json().then((data) => {
+                return response.json().then((data) => {
                     alert(data.error || "Failed to delete the court.");
                 });
             }
@@ -130,9 +130,9 @@ function deleteNote(button) {
         })
         .then((response) => {
             if (response.ok) {
-                window.location.href = "/view-courts";
+                window.location.href = "/";
             } else {
-                response.json().then((data) => {
+                return response.json().then((data) => {
                     alert(data.error || "Failed to delete the note.");
                 });
             }
