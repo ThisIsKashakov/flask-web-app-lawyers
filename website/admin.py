@@ -12,7 +12,7 @@ from .utils import (
 )
 import json
 
-# Для отправки электронной почты
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -21,29 +21,25 @@ import os
 admin = Blueprint("admin", __name__)
 
 
-# Отправка электронной почты с учетными данными
 def send_credentials_email(email, username, password):
     try:
-        # Получение настроек SMTP из .env
+
         smtp_server = os.getenv("SMTP_SERVER", "smtp.example.com")
         smtp_port = int(os.getenv("SMTP_PORT", 465))
         smtp_username = os.getenv("SMTP_USERNAME")
         smtp_password = os.getenv("SMTP_PASSWORD")
         sender_email = os.getenv("SENDER_EMAIL", "noreply@example.com")
 
-        # Проверка обязательных настроек
         if not smtp_username or not smtp_password:
             return False, "SMTP credentials not configured"
 
         print(f"SMTP Settings: {smtp_server}:{smtp_port}, User: {smtp_username}")
 
-        # Создание сообщения
         message = MIMEMultipart()
         message["From"] = sender_email
         message["To"] = email
         message["Subject"] = "Your new account credentials"
 
-        # HTML тело письма
         body = f"""
         <html>
         <body>
@@ -59,12 +55,10 @@ def send_credentials_email(email, username, password):
 
         message.attach(MIMEText(body, "html"))
 
-        # Подключение к SMTP серверу через SSL
         print(f"Connecting to SMTP server {smtp_server}:{smtp_port} via SSL...")
         server = smtplib.SMTP_SSL(smtp_server, smtp_port)
-        server.set_debuglevel(1)  # Включаем отладку
+        server.set_debuglevel(1)
 
-        # Аутентификация
         print(f"Authenticating as {smtp_username}...")
         server.login(smtp_username, smtp_password)
 
@@ -80,7 +74,6 @@ def send_credentials_email(email, username, password):
         return False, str(e)
 
 
-# Маршрут для просмотра пользователей
 @admin.route("/view-users", methods=["GET"])
 @login_required
 @admin_required
@@ -92,7 +85,6 @@ def view_users():
         return jsonify({"Error": str(e)}), 500
 
 
-# Маршрут для создания пользователя
 @admin.route("/create-user", methods=["GET", "POST"])
 @login_required
 @admin_required
@@ -100,9 +92,7 @@ def create_user():
     try:
         if request.method == "POST":
             email = request.form.get("email")
-            # Удалена строка получения статуса админа из формы
 
-            # Валидация данных
             if (
                 not email
                 or not is_valid_range(email, 150)
@@ -112,42 +102,35 @@ def create_user():
                 flash("Invalid email format.", category="error")
                 return render_template("create-user.html", user=current_user)
 
-            # Проверка существования пользователя с таким email
             existing_user = User.query.filter_by(email=email).first()
             if existing_user:
                 flash("User with this email already exists.", category="error")
                 return render_template("create-user.html", user=current_user)
 
-            # Генерация username из email (до символа @)
             username = email.split("@")[0]
 
-            # Проверка существования пользователя с таким именем
             existing_name = User.query.filter_by(name=username).first()
             counter = 1
             original_username = username
 
-            # Если имя занято, добавляем цифру в конец
             while existing_name:
                 username = f"{original_username}{counter}"
                 existing_name = User.query.filter_by(name=username).first()
                 counter += 1
 
-            # Генерация случайного пароля
             password = generate_random_password()
 
-            # Создание нового пользователя
             new_user = User(
                 name=username,
                 email=email,
                 password=generate_password_hash(password, method="scrypt"),
                 is_active=True,
-                is_admin=False,  # Всегда создаем обычного пользователя, не админа
+                is_admin=False,
             )
 
             db.session.add(new_user)
             db.session.commit()
 
-            # Отправка учетных данных по электронной почте
             success, message = send_credentials_email(email, username, password)
 
             if success:
@@ -168,7 +151,6 @@ def create_user():
         return jsonify({"Error": str(e)}), 500
 
 
-# Маршрут для блокировки/разблокировки пользователя
 @admin.route("/toggle-user-status", methods=["POST"])
 @login_required
 @admin_required
@@ -181,11 +163,9 @@ def toggle_user_status():
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # Запрет на блокировку самого себя
         if user.id == current_user.id:
             return jsonify({"error": "You cannot modify your own account"}), 400
 
-        # Переключение статуса
         user.is_active = not user.is_active
         db.session.commit()
 
@@ -200,7 +180,6 @@ def toggle_user_status():
         return jsonify({"Error": str(e)}), 500
 
 
-# Маршрут для удаления пользователя
 @admin.route("/delete-user", methods=["POST"])
 @login_required
 @admin_required
@@ -213,7 +192,6 @@ def delete_user():
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # Запрет на удаление самого себя
         if user.id == current_user.id:
             return jsonify({"error": "You cannot delete your own account"}), 400
 

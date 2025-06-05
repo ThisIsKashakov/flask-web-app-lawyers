@@ -8,14 +8,14 @@ from functools import wraps
 from flask import redirect, url_for, flash
 from flask_login import current_user
 
-# Load environment variables
+
 load_dotenv()
 
-# Storage settings
-MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 8 * 1024 * 1024))  # Default 8MB
-STORAGE_LIMIT = int(os.getenv("STORAGE_LIMIT", 30 * 1024 * 1024 * 1024))  # Default 30GB
 
-# Security settings
+MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 8 * 1024 * 1024))
+STORAGE_LIMIT = int(os.getenv("STORAGE_LIMIT", 30 * 1024 * 1024 * 1024))
+
+
 FORBIDDEN_CHARS = [
     ";",
     "--",
@@ -75,17 +75,16 @@ def generate_random_password(length=12, forbidden_chars=None):
     return password
 
 
-# Список опасных SQL паттернов
 SQL_PATTERNS = [
-    r"(?i)((%27)|('))\s*((%6F)|o|(%4F))((%72)|r|(%52))",  # 'or
-    r"(?i)((%27)|('))\s*((%61)|a|(%41))((%6E)|n|(%4E))((%64)|d|(%44))",  # 'and
-    r"(?i)((%3D)|(=))[^\n]*((%27)|(')|(--)|(\%3B)|(;))",  # ='...
-    r"(?i)((%27)|('))..*?((%27)|('))..",  # '...'
-    r"(?i)/\*.*?\*/",  # /* ... */
-    r"(?i);\s*$",  # Statement ending with ;
-    r"(?i)--",  # SQL comment
-    r"(?i)UNION\s+SELECT",  # UNION SELECT
-    r"(?i)(ALTER|CREATE|DELETE|DROP|EXEC(UTE)?|INSERT|MERGE|SELECT|UPDATE|UNION)",  # SQL commands
+    r"(?i)((%27)|('))\s*((%6F)|o|(%4F))((%72)|r|(%52))",
+    r"(?i)((%27)|('))\s*((%61)|a|(%41))((%6E)|n|(%4E))((%64)|d|(%44))",
+    r"(?i)((%3D)|(=))[^\n]*((%27)|(')|(--)|(\%3B)|(;))",
+    r"(?i)((%27)|('))..*?((%27)|('))..",
+    r"(?i)/\*.*?\*/",
+    r"(?i);\s*$",
+    r"(?i)--",
+    r"(?i)UNION\s+SELECT",
+    r"(?i)(ALTER|CREATE|DELETE|DROP|EXEC(UTE)?|INSERT|MERGE|SELECT|UPDATE|UNION)",
 ]
 
 
@@ -140,9 +139,9 @@ def is_valid_email(email):
 
 def is_file_size_allowed(file, max_size):
     """Check if file size is under the maximum allowed size"""
-    file.seek(0, 2)  # Seek to end of file
-    file_size = file.tell()  # Get current position (file size)
-    file.seek(0)  # Reset file position
+    file.seek(0, 2)
+    file_size = file.tell()
+    file.seek(0)
     return file_size <= max_size
 
 
@@ -175,7 +174,6 @@ def is_storage_available(directory, file_size):
     return stats["free"] >= file_size
 
 
-# Декоратор для маршрутов администратора
 def admin_required(func):
     @wraps(func)
     def decorated_view(*args, **kwargs):

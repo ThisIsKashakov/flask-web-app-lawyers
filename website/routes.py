@@ -14,7 +14,7 @@ from .utils import (
     is_storage_available,
     STORAGE_LIMIT,
     ALLOWED_EXTENSIONS,
-    MAX_FILE_SIZE,  # Add this import
+    MAX_FILE_SIZE,
     admin_required,
 )
 import json
@@ -34,12 +34,8 @@ UPLOAD_FOLDER = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads"
 )
 
-# Ensure upload directory exists
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-# Remove MAX_FILE_SIZE constant definition
-
-# Remove ALLOWED_EXTENSIONS and allowed_file function definitions as they're now in utils.py
 
 
 @routes.route("/", methods=["GET"])
@@ -129,7 +125,7 @@ def new_note():
                     status=status,
                     case_id=case_id,
                     court_id=court_id,
-                    creator_id=current_user.id,  # Добавляем пользователя как создателя
+                    creator_id=current_user.id,
                 )
                 db.session.add(new_note)
                 db.session.commit()
@@ -151,7 +147,6 @@ def edit_note(id):
         if not note:
             return redirect(url_for("routes.view_courts"))
 
-        # Проверка прав доступа: только создатель или админ могут редактировать
         if not current_user.is_admin and note.creator_id != current_user.id:
             flash("You don't have permission to edit this note.", category="error")
             return redirect(url_for("routes.home"))
@@ -229,7 +224,6 @@ def delete_note():
         if not note:
             return jsonify({"error": "Note not found"}), 404
 
-        # Проверка прав доступа: только создатель или админ могут удалять
         if not current_user.is_admin and note.creator_id != current_user.id:
             return (
                 jsonify({"error": "You don't have permission to delete this note"}),
@@ -248,7 +242,7 @@ def delete_note():
 @login_required
 def view_cases():
     try:
-        # Показываем все дела всем пользователям - администраторам и обычным
+
         cases = Case.query.all()
         return render_template("view-cases.html", user=current_user, cases=cases)
     except Exception as e:
@@ -310,7 +304,7 @@ def new_case():
                     details=details,
                     full_name=full_name,
                     phone=phone,
-                    creator_id=current_user.id,  # Устанавливаем текущего пользователя как создателя
+                    creator_id=current_user.id,
                 )
                 db.session.add(new_case)
                 db.session.commit()
@@ -328,7 +322,6 @@ def edit_case(case_id):
         if not case:
             return redirect(url_for("routes.view_cases"))
 
-        # Проверка прав: только владелец дела или администратор могут редактировать
         if not current_user.is_admin and case.creator_id != current_user.id:
             flash("You don't have permission to edit this case.", category="error")
             return redirect(url_for("routes.view_cases"))
@@ -377,7 +370,6 @@ def delete_case():
         if not case:
             return jsonify({"error": "Case not found"}), 404
 
-        # Проверка прав: только владелец дела или администратор могут удалять
         if not current_user.is_admin and case.creator_id != current_user.id:
             return (
                 jsonify({"error": "You don't have permission to delete this case"}),
@@ -408,7 +400,6 @@ def delete_case():
 def case_files(case_id):
     case = Case.query.get_or_404(case_id)
 
-    # Проверка прав доступа: разрешено только создателю или админу
     if not current_user.is_admin and case.creator_id != current_user.id:
         flash(
             "Access denied. You don't have permission to view files for this case.",
@@ -433,7 +424,6 @@ def upload_file(case_id):
     try:
         case = Case.query.get_or_404(case_id)
 
-        # Проверка прав доступа: разрешено только создателю или админу
         if not current_user.is_admin and case.creator_id != current_user.id:
             flash(
                 "Access denied. You don't have permission to upload files to this case.",
@@ -455,30 +445,24 @@ def upload_file(case_id):
             flash("Invalid file type", category="error")
             return redirect(request.url)
 
-        # Check file size
         if not is_file_size_allowed(file, MAX_FILE_SIZE):
             flash("File size exceeds 8MB limit", category="error")
             return redirect(request.url)
 
-        # Check available storage
         if not is_storage_available(UPLOAD_FOLDER, file.content_length):
             flash("Not enough storage space", category="error")
             return redirect(request.url)
 
-        # Generate unique filename
         filename = secure_filename(file.filename)
         unique_filename = f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{filename}"
 
-        # Get file size
-        file.seek(0, 2)  # Seek to end of file
-        file_size = file.tell()  # Get current position (file size)
-        file.seek(0)  # Reset file position
+        file.seek(0, 2)
+        file_size = file.tell()
+        file.seek(0)
 
-        # Save file
         file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
         file.save(file_path)
 
-        # Create database entry with file size
         new_file = CaseFile(
             filename=unique_filename,
             original_filename=filename,
@@ -502,7 +486,6 @@ def download_file(file_id):
     case_file = CaseFile.query.get_or_404(file_id)
     case = Case.query.get_or_404(case_file.case_id)
 
-    # Проверка прав доступа: разрешено только создателю или админу
     if not current_user.is_admin and case.creator_id != current_user.id:
         flash(
             "Access denied. You don't have permission to download this file.",
@@ -528,7 +511,6 @@ def delete_file(file_id):
         case_file = CaseFile.query.get_or_404(file_id)
         case = Case.query.get_or_404(case_file.case_id)
 
-        # Проверка прав доступа: разрешено только создателю или админу
         if not current_user.is_admin and case.creator_id != current_user.id:
             flash(
                 "Access denied. You don't have permission to delete this file.",
@@ -538,11 +520,9 @@ def delete_file(file_id):
 
         file_path = os.path.join(UPLOAD_FOLDER, case_file.filename)
 
-        # Удаление файла из файловой системы
         if os.path.exists(file_path):
             os.remove(file_path)
 
-        # Удаление записи из базы данных
         db.session.delete(case_file)
         db.session.commit()
 
@@ -583,7 +563,7 @@ def search_courts():
 
 @routes.route("/new-court", methods=["GET", "POST"])
 @login_required
-@admin_required  # Добавляем проверку на админа
+@admin_required
 def new_court():
     try:
         if request.method == "POST":
@@ -613,7 +593,7 @@ def new_court():
 
 @routes.route("/edit-court/<int:id>", methods=["GET", "POST"])
 @login_required
-@admin_required  # Добавляем проверку на админа
+@admin_required
 def edit_court(id):
     try:
         court = Court.query.get(id)
@@ -644,7 +624,7 @@ def edit_court(id):
 
 @routes.route("/delete-court", methods=["POST"])
 @login_required
-@admin_required  # Добавляем проверку на админа
+@admin_required
 def delete_court():
     try:
         court_data = json.loads(request.data)
