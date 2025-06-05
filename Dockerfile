@@ -15,8 +15,8 @@ COPY . .
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN mkdir -p /app/website/uploads && \
-    chown -R root:root /app/website/uploads
+RUN mkdir -p /app/uploads && \
+    chown -R root:root /app/uploads
 
 EXPOSE 80
 
