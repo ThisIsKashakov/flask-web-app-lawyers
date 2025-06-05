@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flask_nginx_app
+    restart: always
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./uploads:/app/uploads
+
+    env_file:
+      - .env
+
+    environment:
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE}
+      - STORAGE_LIMIT=${STORAGE_LIMIT}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - SMTP_SERVER=${SMTP_SERVER}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SENDER_EMAIL=${SENDER_EMAIL}
+      - SECRET_KEY=${SECRET_KEY}
+      - FLASK_ENV=production
