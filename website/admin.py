@@ -25,13 +25,15 @@ admin = Blueprint("admin", __name__)
 def send_credentials_email(email, username, password):
     try:
         # Получение настроек SMTP из .env
-        smtp_server = os.getenv("SMTP_SERVER", "185.73.215.181")
-        smtp_port = int(
-            os.getenv("SMTP_PORT", 1025)
-        )  # MailHog по умолчанию использует порт 1025
-        smtp_username = os.getenv("SMTP_USERNAME", "admin")
-        smtp_password = os.getenv("SMTP_PASSWORD", "password")
-        sender_email = os.getenv("SENDER_EMAIL", "admin@example.com")
+        smtp_server = os.getenv("SMTP_SERVER", "smtp.example.com")
+        smtp_port = int(os.getenv("SMTP_PORT", 465))
+        smtp_username = os.getenv("SMTP_USERNAME")
+        smtp_password = os.getenv("SMTP_PASSWORD")
+        sender_email = os.getenv("SENDER_EMAIL", "noreply@example.com")
+
+        # Проверка обязательных настроек
+        if not smtp_username or not smtp_password:
+            return False, "SMTP credentials not configured"
 
         print(f"SMTP Settings: {smtp_server}:{smtp_port}, User: {smtp_username}")
 
@@ -57,26 +59,20 @@ def send_credentials_email(email, username, password):
 
         message.attach(MIMEText(body, "html"))
 
-        # Подключение к SMTP серверу и отправка сообщения
-        print(f"Connecting to SMTP server {smtp_server}:{smtp_port}...")
-        server = smtplib.SMTP(smtp_server, smtp_port)
+        # Подключение к SMTP серверу через SSL
+        print(f"Connecting to SMTP server {smtp_server}:{smtp_port} via SSL...")
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
         server.set_debuglevel(1)  # Включаем отладку
 
-        # Показать приветствие сервера
-        server.ehlo()
-
-        # Для MailHog аутентификация обычно не требуется, но используем если указаны учетные данные
-        if smtp_username and smtp_password:
-            print(f"Authenticating as {smtp_username}...")
-            # Не используем starttls для MailHog
-            server.login(smtp_username, smtp_password)
+        # Аутентификация
+        print(f"Authenticating as {smtp_username}...")
+        server.login(smtp_username, smtp_password)
 
         print("Sending message...")
         server.sendmail(sender_email, email, message.as_string())
         server.quit()
 
         print("Message sent successfully!")
-        print(f"Check MailHog web interface at http://{smtp_server}:8025/")
 
         return True, "Email sent successfully"
     except Exception as e:
@@ -105,7 +101,7 @@ def create_user():
         if request.method == "POST":
             email = request.form.get("email")
             # Удалена строка получения статуса админа из формы
-            
+
             # Валидация данных
             if (
                 not email
