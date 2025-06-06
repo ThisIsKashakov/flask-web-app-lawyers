@@ -1,58 +1,58 @@
 {% extends "base.html" %}
 
 {% block title %}
-    New Case
+    Новое дело
 {% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <div class="text-center">
-            <h1>New Case</h1>
+            <h1>Новое дело</h1>
             <hr />
         </div>
 
         <form method="post">
             <div class="form-group">
-                <label for="exampleInputTitle1">Title</label>
+                <label for="exampleInputTitle1">Заголовок дела</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputTitle1"
                     name="title"
-                    placeholder="Enter title"
+                    placeholder="Введите заголовок дела"
                 />
             </div>
             <div class="form-group">
-                <label for="exampleInputDetails1">Details</label>
+                <label for="exampleInputDetails1">Детали дела</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputDetails1"
                     name="details"
-                    placeholder="Enter details"
+                    placeholder="Введите детали дела"
                 />
             </div>
             <div class="form-group">
-                <label for="exampleInputFullName1">Full name</label>
+                <label for="exampleInputFullName1">ФИО клиента</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputFullName1"
                     name="full_name"
-                    placeholder="Enter full name"
+                    placeholder="Введите ФИО клиента"
                 />
             </div>
             <div class="form-group">
-                <label for="exampleInputPhone1">Phone number</label>
+                <label for="exampleInputPhone1">Телефон</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputPhone1"
                     name="phone"
-                    placeholder="Enter phone number"
+                    placeholder="Введите номер телефона"
                 />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     </div>
 {% endblock %}

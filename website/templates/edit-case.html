@@ -1,72 +1,72 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Edit Case
+    Редактирование дела
 {% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <div class="text-center">
-            <h1>Edit Case</h1>
+            <h1>Редактирование дела</h1>
             <hr />
         </div>
 
         <form method="post">
             <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Заголовок дела</label>
                 <input
                     type="text"
                     class="form-control"
                     id="title"
                     name="title"
                     value="{{ case.title }}"
-                    placeholder="Enter title"
+                    placeholder="Введите заголовок дела"
                 />
             </div>
             <div class="form-group">
-                <label for="details">Details</label>
+                <label for="details">Детали дела</label>
                 <textarea
                     class="form-control"
                     id="details"
                     name="details"
-                    placeholder="Enter details"
+                    placeholder="Введите детали дела"
                 >
 {{ case.details }}</textarea
                 >
             </div>
             <div class="form-group">
-                <label for="full_name">Full Name</label>
+                <label for="full_name">ФИО клиента</label>
                 <input
                     type="text"
                     class="form-control"
                     id="full_name"
                     name="full_name"
                     value="{{ case.full_name }}"
-                    placeholder="Enter full name"
+                    placeholder="Введите ФИО клиента"
                 />
             </div>
             <div class="form-group">
-                <label for="phone">Phone</label>
+                <label for="phone">Телефон</label>
                 <input
                     type="text"
                     class="form-control"
                     id="phone"
                     name="phone"
                     value="{{ case.phone }}"
-                    placeholder="Enter phone"
+                    placeholder="Введите телефон"
                 />
             </div>
             <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
                 <button
                     type="button"
                     class="btn btn-danger ml-2"
                     onclick="deleteCase(this)"
                     data-case-id="{{ case.id }}"
                 >
-                    Delete
+                    Удалить
                 </button>
-                <a href="/case-files/{{ case.id }}" class="btn btn-info ml-2">Files</a>
+                <a href="/case-files/{{ case.id }}" class="btn btn-info ml-2">Файлы</a>
             </div>
         </form>
     </div>

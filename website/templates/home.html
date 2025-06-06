@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Home
+    Главная
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid pt-3 px-4">
-        <h2>Search</h2>
+        <h2>Поиск</h2>
         <form action="{{ url_for('routes.search') }}" method="post" class="input-group mb-3">
             <input
                 type="text"
                 name="search"
                 class="form-control"
-                placeholder="Search"
+                placeholder="Поиск"
                 aria-label="Search"
             />
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </form>
 
         <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
-            <h2>Court Schedules</h2>
-            <button id="exportToExcel" class="btn btn-success">Export to Excel</button>
+            <h2>Отчеты о судебных заседаниях</h2>
+            <button id="exportToExcel" class="btn btn-success">Экспорт в Excel</button>
         </div>
 
         <div class="table-responsive">
@@ -30,16 +30,16 @@
                 <thead>
                     <tr>
                         <th># ID</th>
-                        <th>Client Name</th>
-                        <th>Case Title</th>
-                        <th>Court Address</th>
-                        <th>Court Name</th>
-                        <th>Details</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Creator</th>
-                        <th>Actions</th>
+                        <th>Имя клиента</th>
+                        <th>ID дела</th>
+                        <th>Адрес суда</th>
+                         <th>ID суда</th>
+                         <th>Детали</th>
+                         <th>Дата</th>
+                         <th>Время</th>
+                         <th>Статус</th>
+                         <th>Создатель</th>
+                         <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,10 +65,10 @@
                             <td>
                                 {% if user.is_admin or note.creator_id == user.id %}
                                     <a href="/edit-note/{{ note.id }}" class="btn btn-sm btn-info"
-                                        >Edit</a
+                                        >Редактировать</a
                                     >
                                 {% else %}
-                                    <span class="text-muted">View only</span>
+                                    <span class="text-muted">Только просмотр</span>
                                 {% endif %}
                             </td>
                         </tr>

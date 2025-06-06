@@ -1,34 +1,34 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Create User
+    Создание пользователя
 {% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <div class="text-center">
-            <h1>Create New User</h1>
+            <h1>Создание нового пользователя</h1>
             <hr />
         </div>
 
         <form method="post">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">E-mail</label>
                 <input
                     type="email"
                     class="form-control"
                     id="email"
                     name="email"
-                    placeholder="Enter email"
+                    placeholder="Введите e-mail"
                     required
                 />
                 <small class="form-text text-muted">
-                    Account credentials will be sent to this email address.
+                    Учетные данные будут отправлены на этот e-mail адрес.
                 </small>
             </div>
             <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-primary">Create User</button>
-                <a href="/view-users" class="btn btn-secondary ml-2">Cancel</a>
+                <button type="submit" class="btn btn-primary">Создать пользователя</button>
+                <a href="/view-users" class="btn btn-secondary ml-2">Отмена</a>
             </div>
         </form>
     </div>

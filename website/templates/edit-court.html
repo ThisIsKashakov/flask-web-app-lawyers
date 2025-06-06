@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Edit Court
+    Редактирование суда
 {% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <div class="text-center">
-            <h1>Edit Court</h1>
+            <h1>Редактирование суда</h1>
             <hr />
         </div>
 
         <form method="post">
             <div class="form-group">
-                <label for="exampleInputTitle1">Title</label>
+                <label for="exampleInputTitle1">Название суда</label>
                 <input
                     type="text"
                     class="form-control"
@@ -21,29 +21,29 @@
                     name="title"
                     value="{{ court.title }}"
                     aria-describedby="titleHelp"
-                    placeholder="Enter title"
+                    placeholder="Введите название суда"
                 />
             </div>
             <div class="form-group">
-                <label for="exampleInputAddress1">Address</label>
+                <label for="exampleInputAddress1">Адрес суда</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputAddress1"
                     name="address"
                     value="{{ court.address }}"
-                    placeholder="Enter address"
+                    placeholder="Введите адрес суда"
                 />
             </div>
             <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
                 <button
                     type="button"
                     class="btn btn-danger ml-2"
                     onclick="deleteCourt(this)"
                     data-court-id="{{ court.id }}"
                 >
-                    Delete
+                    Удалить
                 </button>
             </div>
         </form>

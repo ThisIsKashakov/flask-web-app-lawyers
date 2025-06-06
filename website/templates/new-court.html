@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 
 {% block title %}
-    New Court
+    Новый суд
 {% endblock %}
 
 {% block content %}
     <div class="container mt-4">
         <div class="text-center">
-            <h1>New Court</h1>
+            <h1>Новый суд</h1>
             <hr />
         </div>
 
         <form method="post" onsubmit="return validateCourtForm()">
             <div class="form-group">
-                <label for="exampleInputTitle1">Title</label>
+                <label for="exampleInputTitle1">Название суда</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputTitle1"
                     name="title"
                     aria-describedby="titleHelp"
-                    placeholder="Enter title"
+                    placeholder="Введите название суда"
                 />
             </div>
             <div class="form-group">
-                <label for="exampleInputAddress1">Address</label>
+                <label for="exampleInputAddress1">Адрес суда</label>
                 <input
                     type="text"
                     class="form-control"
                     id="exampleInputAddress1"
                     name="address"
-                    placeholder="Enter address"
+                    placeholder="Введите адрес суда"
                 />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Отправить</button>
         </form>
     </div>
 {% endblock %}

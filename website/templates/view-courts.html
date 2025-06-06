@@ -1,29 +1,29 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Courts
+    Суды
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid pt-3 px-4">
-        <h2>Search</h2>
+        <h2>Поиск по судам</h2>
         <form action="{{ url_for('routes.search_courts') }}" method="post" class="input-group mb-3">
             <input
                 type="text"
                 name="search"
                 class="form-control"
-                placeholder="Search"
+                placeholder="Поиск"
                 aria-label="Search"
             />
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </form>
 
         <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
-            <h2>Available Courts</h2>
+            <h2>Суды</h2>
             {% if user.is_admin %}
-                <a href="/new-court" class="btn btn-success">Add New Court</a>
+                <a href="/new-court" class="btn btn-success">Создать новый суд</a>
             {% endif %}
         </div>
 
@@ -32,10 +32,10 @@
                 <thead>
                     <tr>
                         <th># ID</th>
-                        <th>Title</th>
-                        <th>Address</th>
+                        <th>Название</th>
+                        <th>Адрес</th>
                         {% if user.is_admin %}
-                            <th>Actions</th>
+                            <th>Действия</th>
                         {% endif %}
                     </tr>
                 </thead>
@@ -48,7 +48,7 @@
                             {% if user.is_admin %}
                                 <td>
                                     <a href="/edit-court/{{ court.id }}" class="btn btn-sm btn-info"
-                                        >Edit</a
+                                        >Редактировать</a
                                     >
                                 </td>
                             {% endif %}
